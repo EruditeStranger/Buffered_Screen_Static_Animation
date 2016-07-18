@@ -83,7 +83,7 @@ public class Buffered_Anim_Driver
 
     public void draw(Graphics g)
     {
-        g.drawImage(bg, 50, 50, null); //for the background
-        g.drawImage(a.getImage(), 30, 30, null); //gets the current image from the animation class
+        g.drawImage(bg, 0, 0, null); //for the background
+        g.drawImage(a.getImage(), 300, 300, null); //gets the current image from the animation class
     }
 }
