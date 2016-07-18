@@ -76,7 +76,20 @@ public class BufferedScreen //To use Buffer Strategy and Page Flipping
                 videocard.setDisplayMode(dm);
             }
             catch (Exception ex) {}
-           j.createBufferStrategy(2); // 2 separate panels for page flipping
+        }
+        // avoid potential deadlock
+        try {
+            EventQueue.invokeAndWait(new Runnable() {
+                public void run() {
+                    j.createBufferStrategy(2); // 2 separate panels for page flipping
+                }
+            });
+        }
+        catch (InterruptedException ex) {
+            // ignore
+        }
+        catch (InvocationTargetException ex) {
+            // ignore
         }
 
     }
@@ -101,7 +114,7 @@ public class BufferedScreen //To use Buffer Strategy and Page Flipping
         if(w != null)
         {
             BufferStrategy s= w.getBufferStrategy();
-            if(s.contentsLost())
+            if(!s.contentsLost())
             {
                 s.show(); //shows only when there's content to show
             }
